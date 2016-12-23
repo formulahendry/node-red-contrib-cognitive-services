@@ -1,10 +1,13 @@
 var request = require('request');
 
-module.exports = function(RED) {
-    function weblm(config) {
+module.exports = function(RED)
+{
+    function weblm(config)
+    {
         RED.nodes.createNode(this,config);
         var node = this;
-        this.on('input', function(msg) {
+        this.on('input', function(msg)
+        {
             console.log("config.operation=" + config.operation);
             if (this.credentials == null || this.credentials.key == null || this.credentials.key == "")
             {
@@ -27,13 +30,25 @@ module.exports = function(RED) {
                 };
                 request.post(options, function (error, response, body)
                 {
-                    try {
-                        console.log("body=" + body);
-                        if (body.results != null && body.results.length > 0)
+                    try
+                    {
+                        if (!error)
                         {
-                            msg.payload = body.results[0].probability;
-                            node.send(msg);
+                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
+                            if (response.statusCode == 200 && body.results != null && body.results.length > 0)
+                            {
+                                msg.payload = body.results[0].probability;
+                                node.send(msg);
+                            }
+                            else
+                            {
+                                node.error(body);
+                            }
                         }
+                        else
+                        {
+                            node.error(error);
+                        }                            
                     }
                     catch (e)
                     {
@@ -54,10 +69,25 @@ module.exports = function(RED) {
                 };
                 request(options, function (error, response, body)
                 {
-                    try {
-                        console.log("body=" + body);
-                        msg.payload = body;
-                        node.send(msg);
+                    try
+                    {
+                        if (!error)
+                        {
+                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
+                            if (response.statusCode == 200)
+                            {
+                                msg.payload = body;
+                                node.send(msg);
+                            }
+                            else
+                            {
+                                node.error(body);
+                            }
+                        }
+                        else
+                        {
+                            node.error(error);
+                        }          
                     }
                     catch (e)
                     {
