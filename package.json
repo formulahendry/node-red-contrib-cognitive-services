@@ -1,13 +1,23 @@
 {
-    "name"         : "node-red-contrib-cognitive-services",
-    "version"      : "0.0.1",
-    "description"  : "Microsoft Cognitive Services",
-    "dependencies": {
-    },
-    "keywords": [ "azure", "cognitive services", "microsoft" ],
-    "node-red"     : {
-        "nodes": {
-            "cognitive-services": "cognitive-services/weblm.js"
-        }
+  "name": "node-red-contrib-cognitive-services",
+  "version": "0.0.2",
+  "description": "Microsoft Cognitive Services",
+  "dependencies": {},
+  "keywords": [
+    "azure",
+    "cognitive services",
+    "microsoft"
+  ],
+  "node-red": {
+    "nodes": {
+      "spellcheck": "cognitive-services/spellcheck.js",
+      "weblm": "cognitive-services/weblm.js"
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zuhito/node-red-contrib-cognitive-services.git"
+  },
+  "author": "zuhito",
+  "license": "Apache-2.0"
 }
