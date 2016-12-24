@@ -35,7 +35,31 @@ module.exports = function(RED)
                         console.log("response.statusCode=" + response.statusCode + ", body=" + body);
                         if (response.statusCode == 200)
                         {
-                            msg.payload = JSON.parse(body).flaggedTokens;
+                            var flaggedTokens = JSON.parse(body).flaggedTokens;
+                            var tmp = msg.payload;
+
+                            flaggedTokens = flaggedTokens.sort(function(a, b) {
+                                return b.offset - a.offset;
+                            });
+
+                            for (var i = 0; i < flaggedTokens.length; i++)
+                            {
+                                var offset = flaggedTokens[i].offset;
+                                var token = flaggedTokens[i].token;
+                                var suggestion = flaggedTokens[i].suggestions[0].suggestion;
+
+                                var str1 = tmp.substring(0, offset);
+                                var str2 = tmp.substr(offset, token.length);
+                                var str3 = tmp.substring(offset+token.length, tmp.length);
+
+                                if (str2 == token)
+                                {
+                                    tmp = str1 + suggestion + str3;
+                                }
+                            }
+
+                            msg.flaggedTokens = flaggedTokens;
+                            msg.payload = tmp;
                             node.send(msg);
                         }
                         else
