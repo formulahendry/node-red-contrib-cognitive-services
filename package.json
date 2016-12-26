@@ -1,8 +1,10 @@
 {
   "name": "node-red-contrib-cognitive-services",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Microsoft Cognitive Services",
-  "dependencies": {},
+  "dependencies": {
+    "request": "*"
+  },
   "keywords": [
     "azure",
     "cognitive services",
