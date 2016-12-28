@@ -37,10 +37,12 @@ module.exports = function(RED)
                         {
                             if (!error)
                             {
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                                if (response.statusCode == 200 && body.results != null && body.results.length > 0)
+                                try { body = JSON.parse(body); } catch (e) {}
+                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                if (response.statusCode == 200 && body != null && body.results != null && body.results.length > 0 && body.results[0] != null && body.results[0].probability != null)
                                 {
                                     msg.payload = body.results[0].probability;
+                                    msg.details = body;
                                     node.send(msg);
                                 }
                                 else
@@ -56,7 +58,6 @@ module.exports = function(RED)
                         catch (e)
                         {
                             node.error(e, msg);
-                            console.log("exception=" + e);
                         }
                     });
                 }
@@ -66,8 +67,7 @@ module.exports = function(RED)
                         url: 'https://api.projectoxford.ai/text/weblm/v1.0/models',
                         method: 'GET',
                         headers: {
-                            'Ocp-Apim-Subscription-Key': this.credentials.key,
-                            'Content-Type': 'application/json'
+                            'Ocp-Apim-Subscription-Key': this.credentials.key
                         }
                     };
 
@@ -78,10 +78,12 @@ module.exports = function(RED)
                         {
                             if (!error)
                             {
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                                if (response.statusCode == 200)
+                                try { body = JSON.parse(body); } catch (e) {}
+                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                if (response.statusCode == 200 && body != null)
                                 {
                                     msg.payload = body;
+                                    msg.details = body;                                    
                                     node.send(msg);
                                 }
                                 else
@@ -97,7 +99,6 @@ module.exports = function(RED)
                         catch (e)
                         {
                             node.error(e, msg);
-                            console.log("exception=" + e);
                         }
                     });
                 }

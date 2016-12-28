@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-cognitive-services",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Microsoft Cognitive Services",
   "dependencies": {
     "request": "*"
@@ -12,6 +12,7 @@
   ],
   "node-red": {
     "nodes": {
+      "emotion": "cognitive-services/emotion.js",
       "spellcheck": "cognitive-services/spellcheck.js",
       "weblm": "cognitive-services/weblm.js"
     }

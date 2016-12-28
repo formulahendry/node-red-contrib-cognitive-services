@@ -19,8 +19,7 @@ module.exports = function(RED)
                     url: 'https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?mkt=en-us',
                     method: 'POST',
                     headers: {
-                        'Ocp-Apim-Subscription-Key': this.credentials.key,
-                        'Content-Type': 'application/json'
+                        'Ocp-Apim-Subscription-Key': this.credentials.key
                     },
                     form: {
                         "Text": msg.payload
@@ -34,10 +33,11 @@ module.exports = function(RED)
                     {
                         if (!error)
                         {
-                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                            if (response.statusCode == 200)
+                            try { body = JSON.parse(body); } catch (e) {}
+                            console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                            if (response.statusCode == 200 && body != null && body.flaggedTokens != null)
                             {
-                                var flaggedTokens = JSON.parse(body).flaggedTokens;
+                                var flaggedTokens = body.flaggedTokens;
                                 var tmp = msg.payload;
 
                                 flaggedTokens = flaggedTokens.sort(function(a, b) {
@@ -60,8 +60,8 @@ module.exports = function(RED)
                                     }
                                 }
 
-                                msg.flaggedTokens = flaggedTokens;
                                 msg.payload = tmp;
+                                msg.details = body;
                                 node.send(msg);
                             }
                             else
@@ -77,7 +77,6 @@ module.exports = function(RED)
                     catch (e)
                     {
                         node.error(e, msg);
-                        console.log("exception=" + e);
                     }
                 });
             }
