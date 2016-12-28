@@ -6,10 +6,10 @@ Node-RED Nodes for Microsoft Cognitive Services APIs
 Microsoft Cognitive Services are Cognitive APIs on Azure.
 Currently this npm package supports the following APIs.
 - Vision
--- Emotion API
+    - Emotion API
 - Language
--- Bing Spell Check API
--- Web Language Model API
+    - Bing Spell Check API
+    - Web Language Model API
 
 ## Install
 Run the following npm command in your Node-RED environment.
