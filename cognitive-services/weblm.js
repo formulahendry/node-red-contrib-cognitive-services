@@ -14,87 +14,93 @@ module.exports = function(RED)
                 node.error("Input subscription key", msg);
                 console.log("Input subscription key");
             }
+            else
+            {
+                if (config.operation == "cjp") // Calculate Joint Probability
+                {
+                    var options = {
+                        url: 'https://api.projectoxford.ai/text/weblm/v1.0/calculateJointProbability?model=body',
+                        method: 'POST',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.credentials.key,
+                            'Content-Type': 'application/json'
+                        },
+                        json: {
+                            "queries": [msg.payload]
+                        }
+                    };
 
-            if (config.operation == "cjp") // Calculate Joint Probability
-            {
-                var options = {
-                    url: 'https://api.projectoxford.ai/text/weblm/v1.0/calculateJointProbability?model=body',
-                    method: 'POST',
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': this.credentials.key,
-                        'Content-Type': 'application/json'
-                    },
-                    json: {
-                        "queries": [msg.payload]
-                    }
-                };
-                request.post(options, function (error, response, body)
-                {
-                    try
+                    //console.log("options=" + JSON.stringify(options));   
+                    request.post(options, function (error, response, body)
                     {
-                        if (!error)
+                        try
                         {
-                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                            if (response.statusCode == 200 && body.results != null && body.results.length > 0)
+                            if (!error)
                             {
-                                msg.payload = body.results[0].probability;
-                                node.send(msg);
+                                console.log("response.statusCode=" + response.statusCode + ", body=" + body);
+                                if (response.statusCode == 200 && body.results != null && body.results.length > 0)
+                                {
+                                    msg.payload = body.results[0].probability;
+                                    node.send(msg);
+                                }
+                                else
+                                {
+                                    node.error(body);
+                                }
                             }
                             else
                             {
-                                node.error(body);
-                            }
+                                node.error(error);
+                            }                            
                         }
-                        else
+                        catch (e)
                         {
-                            node.error(error);
-                        }                            
-                    }
-                    catch (e)
-                    {
-                        node.error(e, msg);
-                        console.log("exception=" + e);
-                    }
-                });
-            }
-            else if (config.operation == "lam") // List Available Models
-            {
-                var options = {
-                    url: 'https://api.projectoxford.ai/text/weblm/v1.0/models',
-                    method: 'GET',
-                    headers: {
-                        'Ocp-Apim-Subscription-Key': this.credentials.key,
-                        'Content-Type': 'application/json'
-                    }
-                };
-                request(options, function (error, response, body)
+                            node.error(e, msg);
+                            console.log("exception=" + e);
+                        }
+                    });
+                }
+                else if (config.operation == "lam") // List Available Models
                 {
-                    try
+                    var options = {
+                        url: 'https://api.projectoxford.ai/text/weblm/v1.0/models',
+                        method: 'GET',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.credentials.key,
+                            'Content-Type': 'application/json'
+                        }
+                    };
+
+                    //console.log("options=" + JSON.stringify(options));   
+                    request(options, function (error, response, body)
                     {
-                        if (!error)
+                        try
                         {
-                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                            if (response.statusCode == 200)
+                            if (!error)
                             {
-                                msg.payload = body;
-                                node.send(msg);
+                                console.log("response.statusCode=" + response.statusCode + ", body=" + body);
+                                if (response.statusCode == 200)
+                                {
+                                    msg.payload = body;
+                                    node.send(msg);
+                                }
+                                else
+                                {
+                                    node.error(body);
+                                }
                             }
                             else
                             {
-                                node.error(body);
-                            }
+                                node.error(error);
+                            }          
                         }
-                        else
+                        catch (e)
                         {
-                            node.error(error);
-                        }          
-                    }
-                    catch (e)
-                    {
-                        node.error(e, msg);
-                        console.log("exception=" + e);
-                    }
-                });
+                            node.error(e, msg);
+                            console.log("exception=" + e);
+                        }
+                    });
+                }
             }
         });
     }

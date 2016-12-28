@@ -13,71 +13,74 @@ module.exports = function(RED)
                 node.error("Input subscription key", msg);
                 console.log("Input subscription key");
             }
-
-            var options = {
-                url: 'https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?mkt=en-us',
-                method: 'POST',
-                headers: {
-                    'Ocp-Apim-Subscription-Key': this.credentials.key,
-                    'Content-Type': 'application/json'
-                },
-                form: {
-                    "Text": msg.payload
-                }
-            };
-            console.log("options=" + JSON.stringify(options));            
-            request.post(options, function (error, response, body)
+            else
             {
-                try
+                var options = {
+                    url: 'https://api.cognitive.microsoft.com/bing/v5.0/spellcheck/?mkt=en-us',
+                    method: 'POST',
+                    headers: {
+                        'Ocp-Apim-Subscription-Key': this.credentials.key,
+                        'Content-Type': 'application/json'
+                    },
+                    form: {
+                        "Text": msg.payload
+                    }
+                };
+
+                //console.log("options=" + JSON.stringify(options));            
+                request.post(options, function (error, response, body)
                 {
-                    if (!error)
+                    try
                     {
-                        console.log("response.statusCode=" + response.statusCode + ", body=" + body);
-                        if (response.statusCode == 200)
+                        if (!error)
                         {
-                            var flaggedTokens = JSON.parse(body).flaggedTokens;
-                            var tmp = msg.payload;
-
-                            flaggedTokens = flaggedTokens.sort(function(a, b) {
-                                return b.offset - a.offset;
-                            });
-
-                            for (var i = 0; i < flaggedTokens.length; i++)
+                            console.log("response.statusCode=" + response.statusCode + ", body=" + body);
+                            if (response.statusCode == 200)
                             {
-                                var offset = flaggedTokens[i].offset;
-                                var token = flaggedTokens[i].token;
-                                var suggestion = flaggedTokens[i].suggestions[0].suggestion;
+                                var flaggedTokens = JSON.parse(body).flaggedTokens;
+                                var tmp = msg.payload;
 
-                                var str1 = tmp.substring(0, offset);
-                                var str2 = tmp.substr(offset, token.length);
-                                var str3 = tmp.substring(offset+token.length, tmp.length);
+                                flaggedTokens = flaggedTokens.sort(function(a, b) {
+                                    return b.offset - a.offset;
+                                });
 
-                                if (str2 == token)
+                                for (var i = 0; i < flaggedTokens.length; i++)
                                 {
-                                    tmp = str1 + suggestion + str3;
-                                }
-                            }
+                                    var offset = flaggedTokens[i].offset;
+                                    var token = flaggedTokens[i].token;
+                                    var suggestion = flaggedTokens[i].suggestions[0].suggestion;
 
-                            msg.flaggedTokens = flaggedTokens;
-                            msg.payload = tmp;
-                            node.send(msg);
+                                    var str1 = tmp.substring(0, offset);
+                                    var str2 = tmp.substr(offset, token.length);
+                                    var str3 = tmp.substring(offset+token.length, tmp.length);
+
+                                    if (str2 == token)
+                                    {
+                                        tmp = str1 + suggestion + str3;
+                                    }
+                                }
+
+                                msg.flaggedTokens = flaggedTokens;
+                                msg.payload = tmp;
+                                node.send(msg);
+                            }
+                            else
+                            {
+                                node.error(body);
+                            }
                         }
                         else
                         {
-                            node.error(body);
+                            node.error(error);
                         }
                     }
-                    else
+                    catch (e)
                     {
-                        node.error(error);
+                        node.error(e, msg);
+                        console.log("exception=" + e);
                     }
-                }
-                catch (e)
-                {
-                    node.error(e, msg);
-                    console.log("exception=" + e);
-                }
-            });
+                });
+            }
         });
     }
 
