@@ -13,25 +13,25 @@
 7 silly cache add   scope: null,
 7 silly cache add   name: null,
 7 silly cache add   rawSpec: './',
-7 silly cache add   spec: 'C:\\Users\\zuhito\\Desktop\\tmp_nodered4cg\\node-red-contrib-cognitive-services',
+7 silly cache add   spec: 'C:\\Users\\zuhito\\Desktop\\tmp\\node-red-contrib-cognitive-services',
 7 silly cache add   type: 'directory' }
-8 verbose addLocalDirectory C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package.tgz not in flight; packing
+8 verbose addLocalDirectory C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package.tgz not in flight; packing
 9 verbose correctMkdir C:\Users\zuhito\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-10 verbose tar pack [ 'C:\\Users\\zuhito\\AppData\\Roaming\\npm-cache\\node-red-contrib-cognitive-services\\0.0.2\\package.tgz',
-10 verbose tar pack   'C:\\Users\\zuhito\\Desktop\\tmp_nodered4cg\\node-red-contrib-cognitive-services' ]
-11 verbose tarball C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package.tgz
-12 verbose folder C:\Users\zuhito\Desktop\tmp_nodered4cg\node-red-contrib-cognitive-services
-13 info prepublish node-red-contrib-cognitive-services@0.0.2
-14 verbose addLocalTarball adding from inside cache C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package.tgz
+10 verbose tar pack [ 'C:\\Users\\zuhito\\AppData\\Roaming\\npm-cache\\node-red-contrib-cognitive-services\\0.0.5\\package.tgz',
+10 verbose tar pack   'C:\\Users\\zuhito\\Desktop\\tmp\\node-red-contrib-cognitive-services' ]
+11 verbose tarball C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package.tgz
+12 verbose folder C:\Users\zuhito\Desktop\tmp\node-red-contrib-cognitive-services
+13 info prepublish node-red-contrib-cognitive-services@0.0.5
+14 verbose addLocalTarball adding from inside cache C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package.tgz
 15 verbose correctMkdir C:\Users\zuhito\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-16 silly cache afterAdd node-red-contrib-cognitive-services@0.0.2
-17 verbose afterAdd C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package\package.json not in flight; writing
+16 silly cache afterAdd node-red-contrib-cognitive-services@0.0.5
+17 verbose afterAdd C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package\package.json not in flight; writing
 18 verbose correctMkdir C:\Users\zuhito\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-19 verbose afterAdd C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package\package.json written
+19 verbose afterAdd C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package\package.json written
 20 silly publish { name: 'node-red-contrib-cognitive-services',
-20 silly publish   version: '0.0.2',
+20 silly publish   version: '0.0.5',
 20 silly publish   description: 'Microsoft Cognitive Services',
-20 silly publish   dependencies: {},
+20 silly publish   dependencies: { request: '*' },
 20 silly publish   keywords: [ 'azure', 'cognitive services', 'microsoft' ],
 20 silly publish   'node-red':
 20 silly publish    { nodes:
@@ -44,12 +44,12 @@
 20 silly publish   license: 'Apache-2.0',
 20 silly publish   readme: 'node-red-contrib-cognitive-services\r\n===================================\r\n\r\nNodes for Microsoft Cognitive Services\r\n\r\nMicrosoft Cognitive Services are Cognitive APIs on Azure.\r\nCurrently this npm package supports the following APIs.\r\n- Web Language Model API\r\n- Bing Spell Check API\r\n\r\n## Install\r\nRun the following npm command in your Node-RED environment.\r\n```\r\nnpm install -g node-red-contrib-cognitive-services\r\n```\r\n\r\n## Usage\r\n- Show node property and input subscription key from Azure portal.',
 20 silly publish   readmeFilename: 'README.md',
-20 silly publish   gitHead: 'f700de1a51ec3a44c0fc4a00d719c71e4c3a522a',
+20 silly publish   gitHead: '6a9d0f17b05d9ca9012d3c80c44ff7839354ec23',
 20 silly publish   bugs: { url: 'https://github.com/zuhito/node-red-contrib-cognitive-services/issues' },
 20 silly publish   homepage: 'https://github.com/zuhito/node-red-contrib-cognitive-services#readme',
-20 silly publish   _id: 'node-red-contrib-cognitive-services@0.0.2',
+20 silly publish   _id: 'node-red-contrib-cognitive-services@0.0.5',
 20 silly publish   scripts: {},
-20 silly publish   _shasum: '3a724ba2d01ca5b01e0d82bf0aa86e6e3a2279da',
+20 silly publish   _shasum: '3fbda50868b60ab2386d488591aa41dc0a4ef035',
 20 silly publish   _from: '.' }
 21 verbose getPublishConfig undefined
 22 silly mapToRegistry name node-red-contrib-cognitive-services
@@ -64,29 +64,29 @@
 25 silly mapToRegistry   type: 'tag' }
 26 silly mapToRegistry uri https://registry.npmjs.org/node-red-contrib-cognitive-services
 27 verbose publish registryBase https://registry.npmjs.org/
-28 silly publish uploading C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.2\package.tgz
+28 silly publish uploading C:\Users\zuhito\AppData\Roaming\npm-cache\node-red-contrib-cognitive-services\0.0.5\package.tgz
 29 verbose request uri https://registry.npmjs.org/node-red-contrib-cognitive-services
 30 verbose request sending authorization for write operation
-31 info attempt registry request try #1 at 17:08:32
+31 info attempt registry request try #1 at 14:47:52
 32 verbose request using bearer token for auth
-33 verbose request id 52cd6892261387a9
+33 verbose request id f187ac2d1563b4a4
 34 http request PUT https://registry.npmjs.org/node-red-contrib-cognitive-services
 35 http 403 https://registry.npmjs.org/node-red-contrib-cognitive-services
 36 verbose headers { 'content-type': 'application/json',
 36 verbose headers   'cache-control': 'max-age=300',
 36 verbose headers   'content-length': '95',
 36 verbose headers   'accept-ranges': 'bytes',
-36 verbose headers   date: 'Sat, 24 Dec 2016 08:08:02 GMT',
+36 verbose headers   date: 'Wed, 28 Dec 2016 05:47:43 GMT',
 36 verbose headers   via: '1.1 varnish',
 36 verbose headers   connection: 'keep-alive',
-36 verbose headers   'x-served-by': 'cache-nrt6131-NRT',
+36 verbose headers   'x-served-by': 'cache-itm7423-ITM',
 36 verbose headers   'x-cache': 'MISS',
 36 verbose headers   'x-cache-hits': '0',
-36 verbose headers   'x-timer': 'S1482566881.930269,VS0,VE284',
+36 verbose headers   'x-timer': 'S1482904062.360633,VS0,VE675',
 36 verbose headers   vary: 'Accept-Encoding' }
 37 verbose request invalidating C:\Users\zuhito\AppData\Roaming\npm-cache\registry.npmjs.org\node-red-contrib-cognitive-services on PUT
 38 error publish Failed PUT 403
-39 verbose stack Error: "You cannot publish over the previously published version 0.0.2." : node-red-contrib-cognitive-services
+39 verbose stack Error: "You cannot publish over the previously published version 0.0.5." : node-red-contrib-cognitive-services
 39 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
 39 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:252:14)
 39 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
@@ -99,13 +99,13 @@
 39 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:988:12)
 40 verbose statusCode 403
 41 verbose pkgid node-red-contrib-cognitive-services
-42 verbose cwd C:\Users\zuhito\Desktop\tmp_nodered4cg\node-red-contrib-cognitive-services
+42 verbose cwd C:\Users\zuhito\Desktop\tmp\node-red-contrib-cognitive-services
 43 error Windows_NT 10.0.14393
 44 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish" "./"
 45 error node v4.6.0
 46 error npm  v2.15.9
 47 error code E403
-48 error "You cannot publish over the previously published version 0.0.2." : node-red-contrib-cognitive-services
+48 error "You cannot publish over the previously published version 0.0.5." : node-red-contrib-cognitive-services
 49 error If you need help, you may report this error at:
 49 error     <https://github.com/npm/npm/issues>
 50 verbose exit [ 1, true ]
