@@ -61,7 +61,7 @@ module.exports = function(RED)
                                 }
 
                                 msg.payload = tmp;
-                                msg.details = body;
+                                msg.detail = body;
                                 node.send(msg);
                             }
                             else

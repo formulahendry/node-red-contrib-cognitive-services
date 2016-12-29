@@ -45,7 +45,7 @@ module.exports = function(RED)
 
                 if (options != null)
                 {
-                    console.log("options=" + JSON.stringify(options));
+                    //console.log("options=" + JSON.stringify(options));
                     request.post(options, function (error, response, body)
                     {
                         try
@@ -57,7 +57,7 @@ module.exports = function(RED)
                                 if (response.statusCode == 200 && body != null && body.length > 0 && body[0] != null && body[0].scores != null)
                                 {
                                     msg.payload = body[0].scores;
-                                    msg.details = body;
+                                    msg.detail = body;
                                     node.send(msg);
                                 }
                                 else

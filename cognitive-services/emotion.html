@@ -34,4 +34,17 @@
 
 <script type="text/x-red" data-help-name="Emotion">
     <p>Emotion API in Microsoft Cognitive Services</p>
+    <p>This API calcurates face emotion parameters from Image data. Face emotion parameters are anger, contempt, disgust, fear, happiness, neutral, sadness and surprise.</p>
+    <p><b>Image URL</b>
+        <ul>
+            <li>Input(<code>msg.payload</code>): String data which contains Image URL</li>
+            <li>Output(<code>msg.payload</code>): emotion parameters</li>
+        </ul>
+    </p>
+    <p><b>Binary image</b>
+        <ul>
+            <li>Input(<code>msg.payload</code>): Buffer data from file-in node</li>
+            <li>Output(<code>msg.payload</code>): emotion parameters</li>
+        </ul>
+    </p>
 </script>

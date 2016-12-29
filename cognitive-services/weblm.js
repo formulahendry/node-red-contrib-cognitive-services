@@ -42,7 +42,7 @@ module.exports = function(RED)
                                 if (response.statusCode == 200 && body != null && body.results != null && body.results.length > 0 && body.results[0] != null && body.results[0].probability != null)
                                 {
                                     msg.payload = body.results[0].probability;
-                                    msg.details = body;
+                                    msg.detail = body;
                                     node.send(msg);
                                 }
                                 else
@@ -83,7 +83,7 @@ module.exports = function(RED)
                                 if (response.statusCode == 200 && body != null)
                                 {
                                     msg.payload = body;
-                                    msg.details = body;                                    
+                                    msg.detail = body;                                    
                                     node.send(msg);
                                 }
                                 else
