@@ -2,7 +2,7 @@ var request = require('request');
 
 module.exports = function(RED)
 {
-    function emotion(config)
+    function face(config)
     {
         RED.nodes.createNode(this,config);
         var node = this;
@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (Buffer.isBuffer(msg.payload))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://api.projectoxford.ai/face/v1.0/detect',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -31,7 +31,7 @@ module.exports = function(RED)
                 else if (typeof(msg.payload) == 'string' && (msg.payload.indexOf('http://') === 0 || msg.payload.indexOf('https://') === 0))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://api.projectoxford.ai/face/v1.0/detect',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -56,9 +56,9 @@ module.exports = function(RED)
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null)
                                 {
-                                    if (body.length > 0 && body[0].scores != null)
+                                    if (body.length > 0 && body[0].faceRectangle != null)
                                     {
-                                        msg.payload = body[0].scores;
+                                        msg.payload = body[0].faceRectangle;
                                     }
                                     else
                                     {
@@ -91,7 +91,7 @@ module.exports = function(RED)
         });
     }
 
-    RED.nodes.registerType("Emotion", emotion,
+    RED.nodes.registerType("Face", face,
     {
         credentials: {
             key: {

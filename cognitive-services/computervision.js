@@ -2,7 +2,7 @@ var request = require('request');
 
 module.exports = function(RED)
 {
-    function emotion(config)
+    function computervision(config)
     {
         RED.nodes.createNode(this,config);
         var node = this;
@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (Buffer.isBuffer(msg.payload))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -31,7 +31,7 @@ module.exports = function(RED)
                 else if (typeof(msg.payload) == 'string' && (msg.payload.indexOf('http://') === 0 || msg.payload.indexOf('https://') === 0))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -54,11 +54,14 @@ module.exports = function(RED)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
-                                if (response.statusCode == 200 && body != null)
+                                if (response.statusCode == 200 && body != null && body.categories != null)
                                 {
-                                    if (body.length > 0 && body[0].scores != null)
+                                    if (body.categories.length > 0 && body.categories[0].name != null)
                                     {
-                                        msg.payload = body[0].scores;
+                                        var tmp = body.categories.sort(function(a, b) {
+                                            return b.score - a.score;
+                                        });
+                                        msg.payload = tmp[0].name;
                                     }
                                     else
                                     {
@@ -91,7 +94,7 @@ module.exports = function(RED)
         });
     }
 
-    RED.nodes.registerType("Emotion", emotion,
+    RED.nodes.registerType("Computer Vision", computervision,
     {
         credentials: {
             key: {
