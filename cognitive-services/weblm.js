@@ -109,6 +109,10 @@ module.exports = function(RED)
                         }
                     });
                 }
+                else
+                {
+                    node.error("Unsupported operation: " + config.operation);
+                }
             }
         });
     }

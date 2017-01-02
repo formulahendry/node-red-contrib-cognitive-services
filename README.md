@@ -11,6 +11,8 @@ Currently this npm package supports the following APIs.
     - Face API
 - Language
     - Bing Spell Check API
+    - Linguistic Analysis API
+    - Text Analytics API
     - Web Language Model API
 
 ## Install
@@ -21,3 +23,6 @@ npm install -g node-red-contrib-cognitive-services
 
 ## Usage
 - Show node property and input subscription key from Azure portal.
+
+## Microsoft Cognitive Services website
+https://www.microsoft.com/cognitive-services
