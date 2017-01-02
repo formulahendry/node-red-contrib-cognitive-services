@@ -39,9 +39,16 @@ module.exports = function(RED)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
-                                if (response.statusCode == 200 && body != null && body.results != null && body.results.length > 0 && body.results[0] != null && body.results[0].probability != null)
+                                if (response.statusCode == 200 && body != null && body.results != null)
                                 {
-                                    msg.payload = body.results[0].probability;
+                                    if (body.results.length > 0 && body.results[0] != null && body.results[0].probability != null)
+                                    {
+                                        msg.payload = body.results[0].probability;
+                                    }
+                                    else
+                                    {
+                                        msg.payload = null;
+                                    }
                                     msg.detail = body;
                                     node.send(msg);
                                 }
