@@ -59,6 +59,14 @@ module.exports = function(RED)
                                     if (body.length > 0 && body[0].scores != null)
                                     {
                                         msg.payload = body[0].scores;
+                                        msg.payload.anger = Math.round(msg.payload.anger * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.contempt = Math.round(msg.payload.contempt * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.disgust = Math.round(msg.payload.disgust * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.fear = Math.round(msg.payload.fear * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.happiness = Math.round(msg.payload.happiness * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.neutral = Math.round(msg.payload.neutral * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.sadness = Math.round(msg.payload.sadness * Math.pow(10, 2)) / Math.pow(10, 2);
+                                        msg.payload.surprise = Math.round(msg.payload.surprise * Math.pow(10, 2)) / Math.pow(10, 2);
                                     }
                                     else
                                     {
