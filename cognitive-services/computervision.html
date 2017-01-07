@@ -3,6 +3,10 @@
         category: 'analysis',
         color: '#049580',
         defaults: {
+            operation: {
+                value: "description",
+                required: true
+            },
             name: {
                 value:""
             }
@@ -22,6 +26,16 @@
 </script>
 
 <script type="text/x-red" data-template-name="Computer Vision">
+    <div class="form-row">
+        <label for="node-input-operation"><i class="icon-tag"></i> Operation (<a href="https://dev.projectoxford.ai/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fa" target="_blank">See details</a>)</label>
+        <select type="text" id="node-input-operation">
+            <option value="tags">Tags</option>
+            <option value="description">Description</option>
+            <option value="age">Face Age</option>
+            <option value="gender">Face Gender</option>
+            <option value="adult">Adult Score</option>
+        </select>
+    </div>
     <div class="form-row">
         <label for="node-input-key"><i class="icon-tag"></i> Subscription key (<a href="https://www.microsoft.com/cognitive-services" target="_blank">Get key</a>)</label>
         <input type="password" id="node-input-key" placeholder="Paste subscription key of Computer Vision API">

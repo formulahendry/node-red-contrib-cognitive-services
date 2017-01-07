@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (Buffer.isBuffer(msg.payload))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze',
+                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -31,7 +31,7 @@ module.exports = function(RED)
                 else if (typeof(msg.payload) == 'string' && (msg.payload.indexOf('http://') === 0 || msg.payload.indexOf('https://') === 0))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze',
+                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -56,19 +56,86 @@ module.exports = function(RED)
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.categories != null)
                                 {
-                                    if (body.categories.length > 0 && body.categories[0].name != null)
+                                    if (config.operation == "tags") // Tags
                                     {
-                                        var tmp = body.categories.sort(function(a, b) {
-                                            return b.score - a.score;
-                                        });
-                                        msg.payload = tmp[0].name;
+                                        if (body.tags.length > 0 && body.categories[0].name != null)
+                                        {
+                                            var tmp = body.tags.sort(function(a, b) {
+                                                return b.confidence - a.confidence;
+                                            });
+                                            var array = [];
+                                            for (var i = 0; i < tmp.length; i++)
+                                            {
+                                                array.push(tmp[i].name);
+                                            }
+                                            msg.payload = array;
+                                        }
+                                        else
+                                        {
+                                            msg.payload = null;
+                                        }
+                                        msg.detail = body;
+                                        node.send(msg);
+                                    }
+                                    else  if (config.operation == "description") // Description
+                                    {
+                                        if (body != null && body.description != null && body.description.captions != null && body.description.captions.length > 0)
+                                        {
+                                            var tmp = body.description.captions.sort(function(a, b) {
+                                                return b.confidence - a.confidence;
+                                            });
+                                            msg.payload = tmp[0].text;
+                                        }
+                                        else
+                                        {
+                                            msg.payload = null;
+                                        }
+                                        msg.detail = body;
+                                        node.send(msg);
+                                    }
+                                    else  if (config.operation == "age") // Faces(age)
+                                    {
+                                        if (body.faces != null && body.faces.length > 0 && body.faces[0].age != null)
+                                        {
+                                            msg.payload = body.faces[0].age;
+                                        }
+                                        else
+                                        {
+                                            msg.payload = null;
+                                        }
+                                        msg.detail = body;
+                                        node.send(msg);
+                                    }
+                                    else  if (config.operation == "gender") // Faces(gender)
+                                    {
+                                        if (body.faces != null && body.faces.length > 0 && body.faces[0].gender != null)
+                                        {
+                                            msg.payload = body.faces[0].gender;
+                                        }
+                                        else
+                                        {
+                                            msg.payload = null;
+                                        }
+                                        msg.detail = body;
+                                        node.send(msg);
+                                    }
+                                    else  if (config.operation == "adult") // Adult
+                                    {
+                                        if (body.adult != null && body.adult.adultScore != null)
+                                        {
+                                            msg.payload = Math.round(body.adult.adultScore * Math.pow(10, 2)) / Math.pow(10, 2);;
+                                        }
+                                        else
+                                        {
+                                            msg.payload = null;
+                                        }
+                                        msg.detail = body;
+                                        node.send(msg);
                                     }
                                     else
                                     {
-                                        msg.payload = null;
+                                        node.error("Unsupported operation: " + config.operation);
                                     }
-                                    msg.detail = body;
-                                    node.send(msg);
                                 }
                                 else
                                 {
