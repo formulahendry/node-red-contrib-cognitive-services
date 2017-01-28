@@ -14,6 +14,8 @@ Currently this npm package supports the following APIs.
     - Linguistic Analysis API
     - Text Analytics API
     - Web Language Model API
+- Search
+    - Bing News Search API
 
 ## Install
 Run the following npm command in your Node-RED environment.
