@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (Buffer.isBuffer(msg.payload))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
+                        url: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -31,7 +31,7 @@ module.exports = function(RED)
                 else if (typeof(msg.payload) == 'string' && (msg.payload.indexOf('http://') === 0 || msg.payload.indexOf('https://') === 0))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
+                        url: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/analyze?visualFeatures=Categories,Tags,Description,Faces,ImageType,Color,Adult',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,

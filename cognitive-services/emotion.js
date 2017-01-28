@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (Buffer.isBuffer(msg.payload))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -31,7 +31,7 @@ module.exports = function(RED)
                 else if (typeof(msg.payload) == 'string' && (msg.payload.indexOf('http://') === 0 || msg.payload.indexOf('https://') === 0))
                 {
                     options = {
-                        url: 'https://api.projectoxford.ai/emotion/v1.0/recognize',
+                        url: 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,

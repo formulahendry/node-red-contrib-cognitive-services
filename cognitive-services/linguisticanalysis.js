@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (config.operation == "tokens") // Tokens
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/linguistics/v1.0/analyze',
+                        url: 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0/analyze',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -73,7 +73,7 @@ module.exports = function(RED)
                 else if (config.operation == "postags") // POS Tags
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/linguistics/v1.0/analyze',
+                        url: 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0/analyze',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -139,7 +139,7 @@ module.exports = function(RED)
                 else if (config.operation == "constituencytree") // Constituency Tree
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/linguistics/v1.0/analyze',
+                        url: 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0/analyze',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -202,7 +202,7 @@ module.exports = function(RED)
                 else if (config.operation == "listanalyzers") // List Analyzers
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/linguistics/v1.0/analyzers',
+                        url: 'https://westus.api.cognitive.microsoft.com/linguistics/v1.0/analyzers',
                         method: 'GET',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key

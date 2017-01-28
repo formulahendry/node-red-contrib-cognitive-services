@@ -19,7 +19,7 @@ module.exports = function(RED)
                 if (config.operation == "cjp") // Calculate Joint Probability
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/text/weblm/v1.0/calculateJointProbability?model=body',
+                        url: 'https://westus.api.cognitive.microsoft.com/text/weblm/v1.0/calculateJointProbability?model=body',
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -71,7 +71,7 @@ module.exports = function(RED)
                 else if (config.operation == "lam") // List Available Models
                 {
                     var options = {
-                        url: 'https://api.projectoxford.ai/text/weblm/v1.0/models',
+                        url: 'https://westus.api.cognitive.microsoft.com/text/weblm/v1.0/models',
                         method: 'GET',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key
