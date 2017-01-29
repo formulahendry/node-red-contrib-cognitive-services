@@ -1,36 +1,57 @@
 var request = require('request');
-var getURI = function (body, result)
+var getRedirectedUrl = function (url, callback)
 {
-    var urls = [];
-    var counter = 0;
-    body.value.forEach(function(element, index)
-    {
-         var options2 = {
-             url: element.url,
-             method: 'GET'
-         };
-
-         request(options2, function (error2, response2, body2)
+     var options = {
+         url: url,
+         method: 'GET'
+     };
+     request(options, function (error, response, body)
+     {
+         try
          {
-             try
+             if (!error)
              {
-                 if (!error2)
+                 if (response.statusCode == 200 && body != null && response.request.uri.href != null)
                  {
-                     if (response2.statusCode == 200 && body2 != null && response2.request.uri.href != null)
-                     {
-                         urls[index] = {
-                             name: body.value[index].name,
-                             url: response2.request.uri.href
-                         };
-                     }
+                     callback(response.request.uri.href);
                  }
-             } catch (e) {}
-             if (++counter == body.value.length)
-             {
-                 result(urls);
+                 else
+                 {
+                     callback(null);
+                 }
              }
-         });
+             else
+             {
+                 callback(null);
+             }
+         } catch (e)
+         {
+             callback(null);
+         }
     });
+};
+var getRedirectedUrls = function (urls, callback)
+{
+    var redirectedUrls = [];
+    var counter = 0;
+    if (urls.length > 0)
+    {
+        urls.forEach(function(element, index)
+        {
+            getRedirectedUrl(element, function(redirectedUrl)
+            {
+                redirectedUrls[index] = redirectedUrl;
+                if (++counter == urls.length)
+                {
+                    callback(redirectedUrls);
+                }
+            });
+        });
+    }
+    else
+    {
+        callback(null);
+    }
 };
 
 module.exports = function(RED)
@@ -70,19 +91,28 @@ module.exports = function(RED)
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.value != null)
                                 {
-                                    getURI(body, function (result)
-                                    {
-                                        var valid_result = [];
-                                        result.forEach(function (element, index) {
-                                            if (element != null)
-                                            {
-                                                valid_result.push(element);
-                                            }
-                                        })
-                                        msg.payload = valid_result;
-                                        msg.detail = body;                                    
-                                        node.send(msg);
-                                    });
+                                     var urls = [];
+                                     for (var i = 0; i < body.value.length; i++)
+                                     {
+                                         urls[i] = body.value[i].url;
+                                     }
+                                     getRedirectedUrls(urls, function(redirectedUrls)
+                                     {
+                                         var validRedirectedUrls = [];
+                                         if (redirectedUrls != null)
+                                         {
+                                             redirectedUrls.forEach(function(element, index)
+                                             {
+                                                 if (element != null)
+                                                 {
+                                                     validRedirectedUrls.push(element);
+                                                 }
+                                             });
+                                         }
+                                         msg.payload = validRedirectedUrls;
+                                         msg.detail = body;                                    
+                                         node.send(msg);
+                                     });
                                 }
                                 else
                                 {
