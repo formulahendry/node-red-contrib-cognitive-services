@@ -27,7 +27,7 @@ npm install -g node-red-contrib-cognitive-services
 ## Usage
 - Show node property and input subscription key from Azure portal.
 
-## Node-RED Docker image for Azure nodes including Cognitive Services nodes
+## Node-RED Docker image for Azure nodes including Cognitive Services
 https://hub.docker.com/r/dwaiba/azureiot-nodered/
 
 ## Microsoft Cognitive Services website
