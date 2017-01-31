@@ -15,6 +15,7 @@ Currently this npm package supports the following APIs.
     - Text Analytics API
     - Web Language Model API
 - Search
+    - Bing Image Search API
     - Bing News Search API
     - Bing Video Search API
 
