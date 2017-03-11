@@ -29,6 +29,7 @@
       "linguisticanalysis": "cognitive-services/linguisticanalysis.js",
       "textanalytics": "cognitive-services/textanalytics.js",
       "speechtotext": "cognitive-services/speechToText.js",
+      "texttospeech": "cognitive-services/textToSpeech.js",
       "weblm": "cognitive-services/weblm.js",
       "imagesearch": "cognitive-services/imagesearch.js",
       "newssearch": "cognitive-services/newssearch.js",
