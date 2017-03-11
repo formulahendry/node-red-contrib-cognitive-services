@@ -20,6 +20,7 @@ Currently this npm package supports the following APIs.
     - Bing Video Search API
 - Speech
     - Speech To Text API
+    - Text To Speech API
 
 ## Install
 Run the following npm command in your Node-RED environment.
