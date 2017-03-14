@@ -1,10 +1,11 @@
 {
   "name": "node-red-contrib-cognitive-services",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Microsoft Cognitive Services",
   "dependencies": {
     "request": "*",
-    "isstream": "*"
+    "isstream": "*",
+    "uuid": "*"
   },
   "keywords": [
     "node-red",
@@ -46,7 +47,7 @@
   },
   "contributors": [
     {
-      "name": "MattVador"
+      "name": "mattvador"
     }
   ],
   "license": "Apache-2.0",
