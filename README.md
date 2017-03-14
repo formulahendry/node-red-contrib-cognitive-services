@@ -9,6 +9,9 @@ Currently this npm package supports the following APIs.
     - Computer Vision API
     - Emotion API
     - Face API
+- Speech
+    - Speech To Text API
+    - Text To Speech API
 - Language
     - Bing Spell Check API
     - Linguistic Analysis API
@@ -18,9 +21,6 @@ Currently this npm package supports the following APIs.
     - Bing Image Search API
     - Bing News Search API
     - Bing Video Search API
-- Speech
-    - Speech To Text API
-    - Text To Speech API
 
 ## Install
 Run the following npm command in your Node-RED environment.
