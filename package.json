@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-cognitive-services",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Microsoft Cognitive Services",
   "dependencies": {
     "request": "*",
@@ -26,11 +26,11 @@
       "computervision": "cognitive-services/computervision.js",
       "emotion": "cognitive-services/emotion.js",
       "face": "cognitive-services/face.js",
+      "speechtotext": "cognitive-services/speechToText.js",
+      "texttospeech": "cognitive-services/textToSpeech.js",
       "spellcheck": "cognitive-services/spellcheck.js",
       "linguisticanalysis": "cognitive-services/linguisticanalysis.js",
       "textanalytics": "cognitive-services/textanalytics.js",
-      "speechtotext": "cognitive-services/speechToText.js",
-      "texttospeech": "cognitive-services/textToSpeech.js",
       "weblm": "cognitive-services/weblm.js",
       "imagesearch": "cognitive-services/imagesearch.js",
       "newssearch": "cognitive-services/newssearch.js",
@@ -44,8 +44,12 @@
   "author": {
     "name": "zuhito"
   },
+  "contributors": [
+    {
+      "name": "MattVador"
+    }
+  ],
   "license": "Apache-2.0",
-  "readme": "node-red-contrib-cognitive-services\r\n===================================\r\n\r\nNode-RED Nodes for Microsoft Cognitive Services APIs\r\n\r\nMicrosoft Cognitive Services are Cognitive APIs on Azure.\r\nCurrently this npm package supports the following APIs.\r\n- Vision\r\n    - Computer Vision API\r\n    - Emotion API\r\n    - Face API\r\n- Language\r\n    - Bing Spell Check API\r\n    - Linguistic Analysis API\r\n    - Text Analytics API\r\n    - Web Language Model API\r\n\r\n## Install\r\nRun the following npm command in your Node-RED environment.\r\n```\r\nnpm install -g node-red-contrib-cognitive-services\r\n```\r\n\r\n## Usage\r\n- Show node property and input subscription key from Azure portal.\r\n\r\n## Microsoft Cognitive Services website\r\nhttps://www.microsoft.com/cognitive-services",
   "readmeFilename": "README.md",
   "gitHead": "ff0315f81437af3c66053c101e342d71e8613210",
   "bugs": {
