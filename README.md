@@ -22,7 +22,7 @@ Currently this npm package supports the following APIs.
     - Bing News Search API
     - Bing Video Search API
 
-## Flows
+## Example flows
 ![flows](https://raw.githubusercontent.com/zuhito/node-red-contrib-cognitive-services/master/flows.png)
 
 ## Install
@@ -37,6 +37,6 @@ Show node property and input subscription key from Azure portal.
 ## Microsoft Cognitive Services website
 https://www.microsoft.com/cognitive-services
 
-## Examples
+## Examples using Cognitive Services nodes
 - MachineEye using Computer Vision API: http://www.instructables.com/id/MachineEye/?ALLSTEPS
 - Node-RED Docker image for Azure nodes: https://hub.docker.com/r/dwaiba/azureiot-nodered/
