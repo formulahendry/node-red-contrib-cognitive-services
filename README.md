@@ -23,7 +23,7 @@ Currently this npm package supports the following APIs.
     - Bing Video Search API
 
 ## Flows
-[flows](https://raw.githubusercontent.com/zuhito/node-red-contrib-cognitive-services/master/flows.png)
+![flows](https://raw.githubusercontent.com/zuhito/node-red-contrib-cognitive-services/master/flows.png)
 
 ## Install
 Run the following npm command in your Node-RED environment.
