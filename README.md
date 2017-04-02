@@ -38,7 +38,5 @@ Show node property and input subscription key from Azure portal.
 https://www.microsoft.com/cognitive-services
 
 ## Examples
-- MachineEye using Computer Vision API
-http://www.instructables.com/id/MachineEye/?ALLSTEPS
-- Node-RED Docker image for Azure nodes including Cognitive Services
-https://hub.docker.com/r/dwaiba/azureiot-nodered/
+- MachineEye using Computer Vision API: http://www.instructables.com/id/MachineEye/?ALLSTEPS
+- Node-RED Docker image for Azure nodes: https://hub.docker.com/r/dwaiba/azureiot-nodered/
