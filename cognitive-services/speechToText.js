@@ -52,20 +52,8 @@ module.exports = function(RED) {
 
 			if( isReadableStream(msg.payload) ) {
 				payloadType = "stream";
-				
-				if (node.inputStream != msg.payload) {
+				if (node.inputStream != msg.payload)
 					node.inputStream = msg.payload;
-			
-					node.inputStream.on('error', function(err) {
-						node.error("Error with input stream : " + err, msg);
-					});
-			
-					node.inputStream.on('end', function() {
-						node.log("Input stream event 'end'");
-						node.inputStream.unpipe(node.bingSpeechStream);
-						node.bingSpeechStream.end();
-					});
-				}
 			} else if( Buffer.isBuffer(msg.payload) ) {
 				payloadType = "buffer";
 			} else {
@@ -73,86 +61,102 @@ module.exports = function(RED) {
 				return;
 			}
 	
-
 			authorizeBingSpeechAPI(node, msg, function() {
-				var options = {
-					url :	"https://speech.platform.bing.com/recognize?version=3.0" +
-							"&format=json" +
-							"&scenarios=ulm" +
-							"&locale=" + config.locale +
-							"&device.os=" + config.userAgent +
-							"&appid=D4D52672-91D7-4C74-8AD8-42B1D98141A5" +
-							"&requestid=" + uuid() +
-							"&instanceid=" + node.instanceId,
-					method : "POST",
-					headers : {
-						'Ocp-Apim-Subscription-Key' : node.credentials.key,
-						'Content-Type' : "audio/wav; samplerate=16000",
-						'Authorization' : "Bearer "	+ node.bingSpeechAuth
-					},
-				};
-
-				if( payloadType == "buffer" )
-					options.body = msg.payload;
-				
-				node.bingSpeechStream = request.post(options, function(error, response, body) {
-					if( payloadType == "stream" )
-						clearTimeout(node.timeoutStream);
-
-					if( error != undefined ) {
-						node.error("Error with speech to text : " + error, msg);
-						return;
-					}
-
-					if( response == undefined || response == null ) {
-						node.error("Error with speech to text : response is null", msg);
-						return;
-					}
-
-					if( response.statusCode != '200' ) {
-						node.error("Error with speech to text : response status - " + JSON.stringify(response), msg);
-						return;
-					}
-
-					if( body == undefined || body == null ) {
-						node.error("Error with speech to text : body is null", msg);
-						return;
-					}
-
-					try {
-						var r = JSON.parse(body);
-
-						if( r.header == undefined || r.header == null ) {
-							node.error("Error with speech to text : body header is null- " + r, msg);
+				if( node.bingSpeechStream == null ) {
+					var options = {
+						url :	"https://speech.platform.bing.com/recognize?version=3.0" +
+								"&format=json" +
+								"&scenarios=ulm" +
+								"&locale=" + config.locale +
+								"&device.os=" + config.userAgent +
+								"&appid=D4D52672-91D7-4C74-8AD8-42B1D98141A5" +
+								"&requestid=" + uuid() +
+								"&instanceid=" + node.instanceId,
+						method : "POST",
+						headers : {
+							'Ocp-Apim-Subscription-Key' : node.credentials.key,
+							'Content-Type' : "audio/wav; samplerate=16000",
+							'Authorization' : "Bearer "	+ node.bingSpeechAuth
+						}
+					};
+	
+					node.bingSpeechStream = request(options, function(error, response, body) {
+						node.bingSpeechStream = null;
+	
+						if( payloadType == "stream" )
+							clearTimeout(node.timeoutStream);
+	
+						if( error != undefined ) {
+							node.error("Error with speech to text : " + error, msg);
 							return;
 						}
 	
-						if( r.header.status == undefined || r.header.status == null || r.header.status == 'error' ) {
-							node.log("Error with speech to text : incorrect body header - " + r);
-							msg.payload = "";
-							node.send(msg);
+						if( response == undefined || response == null ) {
+							node.error("Error with speech to text : response is null", msg);
 							return;
 						}
-
-						msg.payload = r.results[0].lexical;
-						msg.confidence = r.results[0].confidence;
-						node.log("Text result : " + msg.payload);
-						node.send(msg);
-					} catch( e ) {
-						node.log("Error with speech to text : incorrect body - " + body + " - " + e);
-						msg.payload = "";
-						node.send(msg);
-					}
-				});
-
+	
+						if( response.statusCode != '200' ) {
+							node.error("Error with speech to text : response status - " + JSON.stringify(response), msg);
+							return;
+						}
+	
+						if( body == undefined || body == null ) {
+							node.error("Error with speech to text : body is null", msg);
+							return;
+						}
+	
+						try {
+							var r = JSON.parse(body);
+	
+							if( r.header == undefined || r.header == null ) {
+								node.error("Error with speech to text : body header is null- " + r, msg);
+								return;
+							}
+		
+							if( r.header.status == undefined || r.header.status == null || r.header.status == 'error' ) {
+								node.log("Error with speech to text : incorrect body header - " + r);
+								msg.payload = "";
+								node.send(msg);
+								return;
+							}
+	
+							msg.payload = r.results[0].lexical;
+							msg.confidence = r.results[0].confidence;
+							node.log("Text result : " + msg.payload);
+							node.send(msg);
+						} catch( e ) {
+							node.log("Error with speech to text : incorrect body - " + body + " - " + e);
+							msg.payload = "";
+							node.send(msg);
+						}
+					});
+				}
+				
 				if( payloadType == "stream" ) {
 					node.inputStream.pipe(node.bingSpeechStream);
+
+					// Register event on InputStream
+					node.inputStream.on('error', function(err) {
+						node.error("Error with input stream : " + err, msg);
+					});
+					node.inputStream.on('end', function() {
+						node.log("Input stream event 'end'");
+						node.inputStream.unpipe(node.bingSpeechStream);
+					});
+					
+					// Register event on BingSpeechStream
+					node.bingSpeechStream.on('unpipe', function() {
+						node.bingSpeechStream.end();
+					});
+					
 					// Broke the stream after 10sec
 					node.timeoutStream = setTimeout(function() {
 						node.inputStream.unpipe(node.bingSpeechStream);
-						node.bingSpeechStream.end();
 						node.log("Input stream interrupted because longer than 10sec");
 					}, 10000);
+				} else {
+					node.bingSpeechStream.write(msg.payload);
 				}
 			});
 		});
