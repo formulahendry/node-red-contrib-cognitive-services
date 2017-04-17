@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('Bing Video Search', {
+    RED.nodes.registerType('Bing Web Search', {
         category: 'analysis',
         color: '#049580',
         defaults: {
@@ -18,17 +18,17 @@
         },
         inputs:1,
         outputs:1,
-        icon: "videosearch.png",
+        icon: "websearch.png",
         label: function() {
-            return this.name||"Bing Video Search";
+            return this.name||"Bing Web Search";
         }
     });
 </script>
 
-<script type="text/x-red" data-template-name="Bing Video Search">
+<script type="text/x-red" data-template-name="Bing Web Search">
     <div class="form-row">
         <label for="node-input-key"><i class="icon-tag"></i> Subscription key (<a href="https://www.microsoft.com/cognitive-services" target="_blank">Get key</a>)</label>
-        <input type="password" id="node-input-key" placeholder="Paste subscription key of Bing Video Search API">
+        <input type="password" id="node-input-key" placeholder="Paste subscription key of Bing Web Search API">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name (Optional)</label>
@@ -36,9 +36,9 @@
     </div>
 </script>
 
-<script type="text/x-red" data-help-name="Bing Video Search">
-    <p>Bing Video Search API in Microsoft Cognitive Services</p>
-    <p>This API searches video contents in Bing web data.</p>
+<script type="text/x-red" data-help-name="Bing Web Search">
+    <p>Bing Web Search API in Microsoft Cognitive Services</p>
+    <p>This API searches web contents in Bing web data.</p>
     <p><b>Search</b>
         <ul>
             <li>Input(<code>msg.payload</code>): String data to search</li>

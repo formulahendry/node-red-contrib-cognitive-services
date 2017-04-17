@@ -1,37 +1,41 @@
 var request = require('request');
 var getRedirectedUrl = function (url, callback)
 {
-     var options = {
+    //console.log("getRedirectedUrl: " + url);
+    var options = {
          url: url,
          method: 'GET'
-     };
-     request(options, function (error, response, body)
-     {
-         try
-         {
-             if (!error)
-             {
-                 if (response.statusCode == 200 && body != null && response.request.uri.href != null)
-                 {
-                     callback(response.request.uri.href);
-                 }
-                 else
-                 {
-                     callback(null);
-                 }
-             }
-             else
-             {
-                 callback(null);
-             }
-         } catch (e)
-         {
-             callback(null);
-         }
+    };
+    request(options, function (error, response, body)
+    {
+        try
+        {
+            if (!error)
+            {
+                if (response.statusCode == 200 && body != null && response.request.uri.href != null)
+                {
+                    callback(response.request.uri.href);
+                }
+                else
+                {
+                    callback(null);
+                }
+            }
+            else
+            {
+                callback(null);
+            }
+        }
+        catch (e)
+        {
+            callback(null);
+        }
     });
 };
+
 var getRedirectedUrls = function (urls, callback)
 {
+    //console.log("getRedirectedUrls: " + urls);
     var redirectedUrls = [];
     var counter = 0;
     if (urls.length > 0)
@@ -88,7 +92,7 @@ module.exports = function(RED)
                             if (!error)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                //console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.value != null)
                                 {
                                      var urls = [];
@@ -148,7 +152,7 @@ module.exports = function(RED)
                             if (!error)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                //console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.value != null)
                                 {
                                     msg.payload = body.value;

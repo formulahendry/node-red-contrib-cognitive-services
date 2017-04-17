@@ -88,7 +88,7 @@ module.exports = function(RED)
                             if (!error)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                //console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.value != null)
                                 {
                                      var urls = [];
@@ -148,7 +148,7 @@ module.exports = function(RED)
                             if (!error)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
-                                console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
+                                //console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
                                 if (response.statusCode == 200 && body != null && body.value != null)
                                 {
                                     msg.payload = body.value;
