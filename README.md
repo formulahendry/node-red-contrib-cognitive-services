@@ -16,8 +16,10 @@ Currently this npm package supports the following APIs.
     - Bing Spell Check API
     - Linguistic Analysis API
     - Text Analytics API
+    - Translator API
     - Web Language Model API
 - Search
+    - Bing Web Search API
     - Bing Image Search API
     - Bing News Search API
     - Bing Video Search API
