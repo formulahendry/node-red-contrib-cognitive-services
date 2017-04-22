@@ -56,7 +56,7 @@ module.exports = function(RED)
                             {
                                 try { body = JSON.parse(body); } catch (e) {}
                                 console.log("response.statusCode=" + response.statusCode + ", body=" + JSON.stringify(body));
-                                if (response.statusCode == 200 && body != null && body.categories != null)
+                                if (response.statusCode == 200 && body != null)
                                 {
                                     if (config.operation == "tags") // Tags
                                     {
