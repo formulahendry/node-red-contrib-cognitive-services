@@ -131,7 +131,7 @@ module.exports = function(RED)
                         }
                         catch (e)
                         {
-                            node.error(e, msg);]
+                            node.error(e, msg);
                             node.status({fill: "red", shape: "ring", text: "Error"});
                         }
                     });
