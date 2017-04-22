@@ -8,10 +8,12 @@ module.exports = function(RED)
         var node = this;
         this.on('input', function(msg)
         {
+            node.status({fill: "blue", shape: "dot", text: "Requesting"});
             console.log("config.operation=" + config.operation);
             if (this.credentials == null || this.credentials.key == null || this.credentials.key == "")
             {
                 node.error("Input subscription key", msg);
+                node.status({fill: "red", shape: "ring", text: "Error"});
                 console.log("Input subscription key");
             }
             else
@@ -45,20 +47,24 @@ module.exports = function(RED)
                                      msg.payload = urls;
                                      msg.detail = body;                                    
                                      node.send(msg);
+                                     node.status({});
                                 }
                                 else
                                 {
                                     node.error(body);
+                                    node.status({fill: "red", shape: "ring", text: "Error"});
                                 }
                             }
                             else
                             {
                                 node.error(error);
+                                node.status({fill: "red", shape: "ring", text: "Error"});
                             }          
                         }
                         catch (e)
                         {
                             node.error(e, msg);
+                            node.status({fill: "red", shape: "ring", text: "Error"});
                         }
                     });
                 }
@@ -86,26 +92,31 @@ module.exports = function(RED)
                                     msg.payload = body.value;
                                     msg.detail = body;                                    
                                     node.send(msg);
+                                    node.status({});
                                 }
                                 else
                                 {
                                     node.error(body);
+                                    node.status({fill: "red", shape: "ring", text: "Error"});
                                 }
                             }
                             else
                             {
                                 node.error(error);
+                                node.status({fill: "red", shape: "ring", text: "Error"});
                             }          
                         }
                         catch (e)
                         {
                             node.error(e, msg);
+                            node.status({fill: "red", shape: "ring", text: "Error"});
                         }
                     });
                 }
                 else
                 {
                     node.error("Unsupported operation: " + config.operation);
+                    node.status({fill: "red", shape: "ring", text: "Error"});
                 }
             }
         });

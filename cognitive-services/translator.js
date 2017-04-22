@@ -10,11 +10,13 @@ module.exports = function(RED)
         var node = this;
         this.on('input', function(msg)
         {
+            node.status({fill: "blue", shape: "dot", text: "Requesting"});
             console.log("config.operation=" + config.operation);
             console.log("config.to=" + config.to);
             if (this.credentials == null || this.credentials.key == null || this.credentials.key == "")
             {
                 node.error("Input subscription key", msg);
+                node.status({fill: "red", shape: "ring", text: "Error"});
                 console.log("Input subscription key");
             }
             else
@@ -64,34 +66,41 @@ module.exports = function(RED)
                                                 if (!error3) {
                                                     msg.payload = result.string._;
                                                     node.send(msg);
+                                                    node.status({});
                                                 } else  {
                                                     node.error(error3, msg);
+                                                    node.status({fill: "red", shape: "ring", text: "Error"});
                                                 }
                                             });
                                         } else {
                                             node.error(error2, msg);
+                                            node.status({fill: "red", shape: "ring", text: "Error"});
                                         }
                                     });
                                 }
                                 else
                                 {
                                     node.error(body);
+                                    node.status({fill: "red", shape: "ring", text: "Error"});
                                 }
                             }
                             else
                             {
                                 node.error(error);
+                                node.status({fill: "red", shape: "ring", text: "Error"});
                             }                            
                         }
                         catch (e)
                         {
                             node.error(e, msg);
+                            node.status({fill: "red", shape: "ring", text: "Error"});
                         }
                     });
                 }
                 else
                 {
                     node.error("Unsupported operation: " + config.operation);
+                    node.status({fill: "red", shape: "ring", text: "Error"});
                 }
             }
         });

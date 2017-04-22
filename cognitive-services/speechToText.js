@@ -7,6 +7,7 @@ module.exports = function(RED) {
 	function authorizeBingSpeechAPI(node, msg, callback) {
 		if (node.credentials == null || node.credentials.key == null || node.credentials.key == "") {
 			node.error("Error with subscription key : null", msg);
+			node.status({fill: "red", shape: "ring", text: "Error"});
 			return;
 		}
 
@@ -23,6 +24,7 @@ module.exports = function(RED) {
 			request.post(optionsToken, function(error, response, body) {
 				if( error != undefined ) {
 					node.error("Error with authentication : " + error, msg);
+					node.status({fill: "red", shape: "ring", text: "Error"});
 					return;
 				}
 
@@ -43,8 +45,10 @@ module.exports = function(RED) {
 		node.instanceId = uuid();
 
 		node.on('input', function(msg) {
+			node.status({fill: "blue", shape: "dot", text: "Requesting"});
 			if( msg.payload == null ) {
 				node.error("Error with payload : null", msg);
+				node.status({fill: "red", shape: "ring", text: "Error"});
 				return;
 			}
 			
@@ -58,6 +62,7 @@ module.exports = function(RED) {
 				payloadType = "buffer";
 			} else {
 				node.error("Error with payload : not a Stream Readable nor a Buffer", msg);
+				node.status({fill: "red", shape: "ring", text: "Error"});
 				return;
 			}
 	
@@ -88,21 +93,25 @@ module.exports = function(RED) {
 	
 						if( error != undefined ) {
 							node.error("Error with speech to text : " + error, msg);
+							node.status({fill: "red", shape: "ring", text: "Error"});
 							return;
 						}
 	
 						if( response == undefined || response == null ) {
 							node.error("Error with speech to text : response is null", msg);
+							node.status({fill: "red", shape: "ring", text: "Error"});
 							return;
 						}
 	
 						if( response.statusCode != '200' ) {
 							node.error("Error with speech to text : response status - " + JSON.stringify(response), msg);
+							node.status({fill: "red", shape: "ring", text: "Error"});
 							return;
 						}
 	
 						if( body == undefined || body == null ) {
 							node.error("Error with speech to text : body is null", msg);
+							node.status({fill: "red", shape: "ring", text: "Error"});
 							return;
 						}
 	
@@ -111,6 +120,7 @@ module.exports = function(RED) {
 	
 							if( r.header == undefined || r.header == null ) {
 								node.error("Error with speech to text : body header is null- " + r, msg);
+								node.status({fill: "red", shape: "ring", text: "Error"});
 								return;
 							}
 		
@@ -118,6 +128,7 @@ module.exports = function(RED) {
 								node.log("Error with speech to text : incorrect body header - " + r);
 								msg.payload = "";
 								node.send(msg);
+								node.status({});
 								return;
 							}
 	
@@ -125,10 +136,12 @@ module.exports = function(RED) {
 							msg.confidence = r.results[0].confidence;
 							node.log("Text result : " + msg.payload);
 							node.send(msg);
+							node.status({});
 						} catch( e ) {
 							node.log("Error with speech to text : incorrect body - " + body + " - " + e);
 							msg.payload = "";
 							node.send(msg);
+							node.status({});
 						}
 					});
 				}
@@ -139,6 +152,7 @@ module.exports = function(RED) {
 					// Register event on InputStream
 					node.inputStream.on('error', function(err) {
 						node.error("Error with input stream : " + err, msg);
+						node.status({fill: "red", shape: "ring", text: "Error"});
 					});
 					node.inputStream.on('end', function() {
 						node.log("Input stream event 'end'");

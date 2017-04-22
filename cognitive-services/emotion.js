@@ -8,9 +8,11 @@ module.exports = function(RED)
         var node = this;
         this.on('input', function(msg)
         {
+            node.status({fill: "blue", shape: "dot", text: "Requesting"});
             if (this.credentials == null || this.credentials.key == null || this.credentials.key == "")
             {
                 node.error("Input subscription key", msg);
+                node.status({fill: "red", shape: "ring", text: "Error"});
                 console.log("Input subscription key");
             }
             else
@@ -74,26 +76,31 @@ module.exports = function(RED)
                                     }
                                     msg.detail = body;
                                     node.send(msg);
+                                    node.status({});
                                 }
                                 else
                                 {
                                     node.error(body);
+                                    node.status({fill: "red", shape: "ring", text: "Error"});
                                 }
                             }
                             else
                             {
                                 node.error(error);
+                                node.status({fill: "red", shape: "ring", text: "Error"});
                             }
                         }
                         catch (e)
                         {
                             node.error(e, msg);
+                            node.status({fill: "red", shape: "ring", text: "Error"});
                         }
                     });
                 }
                 else
                 {
                     node.error("Unsupported format: This node supports Buffer data from file-in node and URL String data");
+                    node.status({fill: "red", shape: "ring", text: "Error"});
                 }
             }
         });
