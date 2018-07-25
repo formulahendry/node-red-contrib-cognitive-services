@@ -34,6 +34,12 @@ module.exports = function(RED)
                 {
                     options = {
                         url: 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect',
+                        qs: {
+                            'returnFaceId': 'true',
+                            'returnFaceLandmarks': 'false',
+                            'returnFaceAttributes': 'age,gender,headPose,smile,facialHair,glasses,' +
+                                'emotion,hair,makeup,occlusion,accessories,blur,exposure,noise'
+                        },
                         method: 'POST',
                         headers: {
                             'Ocp-Apim-Subscription-Key': this.credentials.key,
@@ -60,7 +66,7 @@ module.exports = function(RED)
                                 {
                                     if (body.length > 0 && body[0].faceRectangle != null)
                                     {
-                                        msg.payload = body[0].faceRectangle;
+                                        msg.payload = body;
                                     }
                                     else
                                     {
